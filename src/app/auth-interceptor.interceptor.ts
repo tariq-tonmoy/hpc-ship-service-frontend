@@ -9,22 +9,28 @@ import { Observable } from 'rxjs';
 import { AuthDataStorageService } from './auth-data-storage.service';
 import { UserCredentials } from './Models/userCredentials';
 import { UserAuthData } from './Models/userAuthData';
-import { LocalStorageService } from 'ngx-webstorage';
+import { ConfigService } from './config.service';
+import { Config } from './Models/config';
+
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
 
+  private host: string = "";
   private userCredentials: UserCredentials | undefined;
 
   private userAuthData: UserAuthData | undefined;
 
-  constructor(private authDataStorageService: AuthDataStorageService, private storage: LocalStorageService) {
+  constructor(private configService: ConfigService, private authDataStorageService: AuthDataStorageService) {
     this.userAuthData = this.authDataStorageService.getAuthenticationInfo();
     this.userCredentials = this.authDataStorageService.getCredentials();
     this.authDataStorageService.userCredentialsChange.subscribe(x => {
       this.userCredentials = x;
     });
     this.authDataStorageService.userAuthDataChange.subscribe(x => this.userAuthData = x);
+    this.configService.getConfig().subscribe((data: Config) => {
+      this.host = data.host;
+    });
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,7 +39,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Basic ${credentials}`,
-          'Access-Control-Allow-Origin': '127.0.0.40',
+          'Access-Control-Allow-Origin': this.host,
           'Content-Type': 'application/json'
         }
       });

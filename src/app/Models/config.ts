@@ -6,4 +6,5 @@ export interface Config {
   getShipsUrl: string,
   getShipUrl: string,
   notificationUrl: string,
+  host: string,
 }
