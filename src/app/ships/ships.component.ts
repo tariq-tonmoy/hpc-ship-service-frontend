@@ -35,6 +35,7 @@ export class ShipsComponent implements OnInit, OnDestroy {
     getShipUrl: "",
     updateShipsUrl: "",
     notificationUrl: "",
+	host: "",
   };
   pageIndex: number = 1;
   count: number = 0;
