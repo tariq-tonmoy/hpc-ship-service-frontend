@@ -1,0 +1,154 @@
+<div>
+  <div *ngFor="let alert of alerts, let i = index">
+    <alert class="alert alert-dismissible" [type]="alert.type" [dismissible]="true" (onClosed)="onAlertClosed(i)">{{ alert.msg }}</alert>
+  </div>
+
+  <ng-template #ship_modal>
+    <div class="modal-form" tabindex="-1" data-bs-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h3>
+                <span>Ship Details</span>
+              </h3>
+            </div>
+          </div>
+          <div class="modal-body">
+
+            <form #shipForm="ngForm">
+              <div class="form-group mb-3">
+                <label for="ship_id">Ship Id</label>
+                <input type="text" required class="validate form-control" id="ship_id" name="ship_id" [(ngModel)]="currentShip.ship.shipId"
+                       placeholder="Id" disabled="disabled">
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="ship_name">Ship Name</label>
+                <input type="text" required class="validate form-control" id="ship_name" name="ship_name" [(ngModel)]="currentShip.ship.shipName"
+                       placeholder="Name">
+              </div>
+
+
+              <div class="form-group mb-3">
+                <label for="ship_code">Ship Code</label>
+                <input type="text" required class="validate form-control" id="ship_code" [(ngModel)]="currentShip.ship.code"
+                       name="ship_code"
+                       placeholder="Code">
+              </div>
+              <h6>Dimensions</h6>
+              <hr style="width: 100%; height: 5px; margin:  5px 0 15px 0;" class="secondary-ascent" />
+              <div class="form-group mb-3">
+                <div *ngFor="let dimension of currentShip.ship.dimensions, let i=index">
+                  <div class="form-group mb-3">
+                    <label for="dimension-id-{{i}}">Dimension Id</label>
+                    <input type="text" class="form-control"
+                           placeholder="Unit" [(ngModel)]="currentShip.ship.dimensions[i].dimensionId" name="dimension-id-{{i}}" disabled="disabled">
+                  </div>
+                  <button type="button" class="btn btn-link" (click)="removeDimension(i)">Remove Dimension</button>
+                  <div class="form-group mb-3">
+                    <label for="dimension-unit-{{i}}">Unit</label>
+                    <input type="text" class="form-control"
+                           placeholder="Unit" [(ngModel)]="currentShip.ship.dimensions[i].unit" name="dimension-unit-{{i}}">
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="dimension-height-{{i}}">Height</label>
+                    <input type="text" class="form-control"
+                           placeholder="Height" [(ngModel)]="currentShip.ship.dimensions[i].height" name="dimension-height-{{i}}">
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="dimension-width-{{i}}">Width</label>
+                    <input type="text" class="form-control"
+                           placeholder="Width" [(ngModel)]="currentShip.ship.dimensions[i].width" name="dimension-width-{{i}}">
+                  </div>
+                  <hr style="width: 100%; height: 5px; margin:  5px 0 15px 0;" class="secondary-ascent" />
+                </div>
+                <button type="button" class="btn btn-link" (click)="addDimension()">Add Dimension</button>
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modalClose()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="modalSubmit()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            Ship Id
+          </th>
+          <th scope="col">
+            Ship Name
+          </th>
+          <th scope="col">
+            Ship Code
+          </th>
+          <th scope="col">
+            Dimensions
+          </th>
+          <th scope="col">
+            Created Date
+          </th>
+          <th scope="col">
+            Last Updated Date
+          </th>
+          <td class="border-dark" [hidden]="!canModify">
+            <span>
+              <a href="#" (click)="AddNewShip(ship_modal)" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</a>
+            </span>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let response of shipResponses, let i= index">
+          <td>
+            {{response.ship.shipId}}
+          </td>
+          <td>
+            {{response.ship.shipName}}
+          </td>
+          <td>
+            {{response.ship.code}}
+          </td>
+          <td>
+            <table class="table">
+              <tbody>
+                <tr *ngFor="let dimension of shipResponses[i].ship.dimensions">
+                  <td>
+                    {{dimension.height}}x{{dimension.width}} square {{dimension.unit}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>
+            {{response.createdDate | date :'short'}}
+          </td>
+          <td>
+            {{response.lastUpdatedDate | date :'short'}}
+          </td>
+          <td [hidden]="!canModify">
+            <span>
+              <a href="#" (click)="edit(i, ship_modal)" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</a>
+            </span>
+            &nbsp;
+            <span>
+              <a href="#" (click)="delete(i)" style="color:red">Delete</a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination [totalItems]="count" [(ngModel)]="pageIndex" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>

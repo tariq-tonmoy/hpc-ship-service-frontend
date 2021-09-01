@@ -1,0 +1,9 @@
+{
+  "authenticationUrl": "http://127.0.0.40:8188/Authentication/Authenticate",
+  "createShipsUrl": "http://127.0.0.40:8085/Ship/AddShips",
+  "updateShipsUrl": "http://127.0.0.40:8085/Ship/UpdateShips",
+  "deactivateShipsUrl": "http://127.0.0.40:8085/Ship/DeactivateShips",
+  "getShipsUrl": "http://127.0.0.40:8089/Query/GetShips?",
+  "getShipUrl": "http://127.0.0.40:8089/Query/GetShip?",
+  "notificationUrl": "http://127.0.0.40:8091/hubs"
+}

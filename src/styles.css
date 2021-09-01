@@ -1,0 +1,9 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+body {
+  padding-top: 65px;
+}
+
+td {
+  vertical-align: middle;
+}

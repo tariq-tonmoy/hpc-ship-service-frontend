@@ -1,0 +1,7 @@
+<app-navigation-bar></app-navigation-bar>
+
+<div class="container-xxl my-md-4 bd-layout">
+  <app-authentication [hidden]="isAuthenticated"></app-authentication>
+
+  <app-ships [hidden]="!isAuthenticated"></app-ships>
+</div>

@@ -1,0 +1,9 @@
+{
+  "authenticationUrl": "http://localhost:8188/Authentication/Authenticate",
+  "createShipsUrl": "http://localhost:8085/Ship/AddShips",
+  "updateShipsUrl": "http://localhost:8085/Ship/UpdateShips",
+  "deactivateShipsUrl": "http://localhost:8085/Ship/DeactivateShips",
+  "getShipsUrl": "http://localhost:8089/Query/GetShips?",
+  "getShipUrl": "http://localhost:8089/Query/GetShip?",
+  "notificationUrl": "http://localhost:8091/hubs"
+}

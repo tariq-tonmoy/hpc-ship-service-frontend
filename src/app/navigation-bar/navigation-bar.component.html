@@ -1,0 +1,15 @@
+<nav class="navbar fixed-top navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="https://www.hamburgportconsulting.com/images/HPC_45_yoe_RZ_HPC_blue_RGB.png" alt="" height="48" class="d-inline-block align-text-top">
+      HPC Ship Management System
+    </a>
+
+    <div class="d-flex" id="navbarText">
+      <span class="navbar-text" style="float:right" [hidden]="!isAuthenticated">
+        {{username}}
+        <button type="button" class="btn btn-warning" (click)="logout()" style="height:36px">Logout</button>
+      </span>
+    </div>
+  </div>
+</nav>
